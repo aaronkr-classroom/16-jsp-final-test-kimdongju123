@@ -26,6 +26,8 @@
     <!-- JS 파일에 대한 script테그를 수정하십시오 -->
     <script defer src="${pageContext.request.contextPath}/public/js/functions.js"></script>
   </head>
+<script defer src="${pageContext.request.contextPath}/public/js/validation.js"></script>
+
 
   <body>
     <!-- HEADER -->
@@ -131,5 +133,45 @@
 
     <!-- Bootstrap의 JS -->
     <script src="${pageContext.request.contextPath}/public/js/bootstrap.bundle.min.js"></script>
-  </body>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form");
+    form.addEventListener("submit", function (event) {
+      const name = document.getElementById("floatingName").value.trim();
+      const email = document.getElementById("floatingEmail").value.trim();
+      const phone = document.getElementById("floatingPhone").value.trim();
+      const password = document.querySelector("input[name='password']").value;
+
+      // 이름 검증
+      if (!name) {
+        alert("Name을 입력해 주세요.");
+        event.preventDefault();
+        return;
+      }
+
+      // 이메일 검증
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("유효한 이메일을 입력해 주세요.");
+        event.preventDefault();
+        return;
+      }
+
+      // 전화번호 검증
+      const phoneRegex = /^[0-9]{10,11}$/;
+      if (!phoneRegex.test(phone)) {
+        alert("전화번호는 숫자 10~11자리여야 합니다.");
+        event.preventDefault();
+        return;
+      }
+
+      // 비밀번호 검증
+      if (password.length < 6) {
+        alert("비밀번호는 최소 6자 이상이어야 합니다.");
+        event.preventDefault();
+      }
+    });
+  });
+</script>
+</body>
 </html>
